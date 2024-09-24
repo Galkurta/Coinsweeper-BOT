@@ -53,7 +53,7 @@ class Coinsweeper {
 
   async wait(seconds) {
     for (let i = seconds; i > 0; i--) {
-      process.stdout.write(`\rWaiting ${i} seconds to continue...`);
+      process.stdout.write(`\rWaiting ${i} seconds to continue`);
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
     process.stdout.write("\r" + " ".repeat(40) + "\r");
@@ -154,7 +154,7 @@ class Coinsweeper {
 
         logger.info(`Account ${i + 1} | ${userData.first_name}`);
 
-        logger.info(`Logging in account ${userData.id}...`);
+        logger.info(`Logging in account ${userData.id}`);
         const loginResult = await this.login(userData);
         if (loginResult.success) {
           logger.info("Login successful!");
