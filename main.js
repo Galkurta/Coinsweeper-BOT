@@ -162,7 +162,7 @@ class Coinsweeper {
     return response.success;
   }
 
-  async win({ score, gameTime,h }) {
+  async win({ score, gameTime }) {
     const response = await this.request("POST", "api/games/win", {
       bagCoins: this.game.rewards.bagCoins,
       bits: this.game.rewards.bits,
@@ -170,7 +170,6 @@ class Coinsweeper {
       gameId: this.game.id,
       score,
       gameTime,
-      h: this.h
     });
     if (response.success) {
       this.game = response.data;
@@ -195,20 +194,18 @@ class Coinsweeper {
             Math.random() *
               (this.gameConfig.maxGameTime - this.gameConfig.minGameTime + 1)
           ) + this.gameConfig.minGameTime;
-        const i = '66f28527e5c5186a622a58a2v$2f1';
-        const score = Math.floor((10 * i + Math.max(0, 1200 - 10 * game_time) + 2000) * (1 + 9 / 54)) / 10 + value(this.game.id);
-        const mr = `${this.game.id}-${new Date(this.game.createdAt).getTime()}`;
-
-        const xr = i + "-" + mr;
-        const kr = `${Bt}-${er.id}`;
-        const h = CryptoJS.HmacSHA256(kr, xr).toString(CryptoJS.enc.Hex);
+        const score =
+          Math.floor(
+            Math.random() *
+              (this.gameConfig.maxScore - this.gameConfig.minScore + 1)
+          ) + this.gameConfig.minScore;
 
         await this.wait(gameTime);
 
         const isWin = Math.random() < this.winRate;
 
         if (isWin) {
-          const winResult = await this.win({ gameTime, score,h });
+          const winResult = await this.win({ gameTime, score });
           if (winResult) {
             this.info.score += score;
             logger.info(
